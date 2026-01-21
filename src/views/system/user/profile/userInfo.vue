@@ -22,7 +22,7 @@
    </el-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { updateUserProfile } from "@/api/system/user"
 
 const props = defineProps({

@@ -62,7 +62,7 @@
    </div>
 </template>
 
-<script setup name="Profile">
+<script setup lang="ts" name="Profile">
 import userAvatar from "./userAvatar"
 import userInfo from "./userInfo"
 import resetPwd from "./resetPwd"

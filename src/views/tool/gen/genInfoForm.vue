@@ -234,7 +234,7 @@
   </el-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { listMenu } from "@/api/system/menu"
 
 const subColumns = ref([])

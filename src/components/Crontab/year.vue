@@ -40,7 +40,7 @@
     </el-form>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const emit = defineEmits(['update'])
 const props = defineProps({
     cron: {

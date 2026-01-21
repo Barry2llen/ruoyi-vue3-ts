@@ -50,7 +50,7 @@
   </el-dialog>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { listDbTable, importTable } from "@/api/tool/gen"
 
 const total = ref(0)

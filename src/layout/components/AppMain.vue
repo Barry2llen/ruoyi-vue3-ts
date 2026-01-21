@@ -12,7 +12,7 @@
   </section>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import copyright from "./Copyright/index"
 import iframeToggle from "./IframeToggle/index"
 import useTagsViewStore from '@/store/modules/tagsView'

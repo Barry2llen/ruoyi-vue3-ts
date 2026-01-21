@@ -9,7 +9,7 @@
   </el-breadcrumb>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import usePermissionStore from '@/store/modules/permission'
 
 const route = useRoute()

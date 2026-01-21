@@ -24,7 +24,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 // 记录未匹配的项
 const unmatchArray = ref([])
 

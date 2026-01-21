@@ -23,7 +23,7 @@ export function vueTemplate(str) {
 }
 
 export function vueScript(str) {
-  return `<script setup>
+  return `<script setup lang="ts">
     ${str}
   </script>`
 }
