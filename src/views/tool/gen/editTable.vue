@@ -121,7 +121,7 @@
   </el-card>
 </template>
 
-<script setup name="GenEdit">
+<script setup lang="ts" name="GenEdit">
 import { getGenTable, updateGenTable } from "@/api/tool/gen"
 import { optionselect as getDictOptionselect } from "@/api/system/dict/type"
 import basicInfoForm from "./basicInfoForm"

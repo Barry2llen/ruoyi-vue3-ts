@@ -169,7 +169,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { getServer } from '@/api/monitor/server'
 
 const server = ref([])

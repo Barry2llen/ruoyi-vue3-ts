@@ -11,7 +11,7 @@
   </el-menu>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import SidebarItem from '../Sidebar/SidebarItem'
 import useAppStore from '@/store/modules/app'
 import useSettingsStore from '@/store/modules/settings'

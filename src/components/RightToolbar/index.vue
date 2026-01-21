@@ -39,7 +39,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   /* 是否显示检索条件 */
   showSearch: {

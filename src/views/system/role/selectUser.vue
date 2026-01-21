@@ -60,7 +60,7 @@
    </el-dialog>
 </template>
 
-<script setup name="SelectUser">
+<script setup lang="ts" name="SelectUser">
 import { authUserSelectAll, unallocatedUserList } from "@/api/system/role"
 
 const props = defineProps({

@@ -14,7 +14,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { scrollTo } from '@/utils/scroll-to'
 
 const props = defineProps({

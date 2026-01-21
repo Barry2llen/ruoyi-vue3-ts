@@ -145,7 +145,7 @@
   </div>
 </template>
 
-<script setup name="Gen">
+<script setup lang="ts" name="Gen">
 import { listTable, previewTable, delTable, genCode, synchDb } from "@/api/tool/gen"
 import router from "@/router"
 import importTable from "./importTable"

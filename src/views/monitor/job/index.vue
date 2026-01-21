@@ -284,7 +284,7 @@
    </div>
 </template>
 
-<script setup name="Job">
+<script setup lang="ts" name="Job">
 import Crontab from '@/components/Crontab'
 import { listJob, getJob, delJob, addJob, updateJob, runJob, changeJobStatus } from "@/api/monitor/job"
 

@@ -197,7 +197,7 @@
    </div>
 </template>
 
-<script setup name="Operlog">
+<script setup lang="ts" name="Operlog">
 import { list, delOperlog, cleanOperlog } from "@/api/monitor/operlog"
 
 const { proxy } = getCurrentInstance()

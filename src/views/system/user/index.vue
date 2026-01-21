@@ -213,7 +213,7 @@
   </div>
 </template>
 
-<script setup name="User">
+<script setup lang="ts" name="User">
 import { getToken } from "@/utils/auth"
 import useAppStore from '@/store/modules/app'
 import { changeUserStatus, listUser, resetUserPwd, delUser, getUser, updateUser, addUser, deptTreeSelect } from "@/api/system/user"

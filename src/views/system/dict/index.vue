@@ -171,7 +171,7 @@
    </div>
 </template>
 
-<script setup name="Dict">
+<script setup lang="ts" name="Dict">
 import useDictStore from '@/store/modules/dict'
 import { listType, getType, delType, addType, updateType, refreshCache } from "@/api/system/dict/type"
 

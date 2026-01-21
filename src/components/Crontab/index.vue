@@ -124,7 +124,7 @@
     </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import CrontabSecond from "./second.vue"
 import CrontabMin from "./min.vue"
 import CrontabHour from "./hour.vue"

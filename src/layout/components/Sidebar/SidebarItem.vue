@@ -27,7 +27,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { isExternal } from '@/utils/validate'
 import AppLink from './Link'
 import { getNormalPath } from '@/utils/ruoyi'

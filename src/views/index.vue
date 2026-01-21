@@ -1094,7 +1094,7 @@
   </div>
 </template>
 
-<script setup name="Index">
+<script setup lang="ts" name="Index">
 const version = ref('3.9.1')
 
 function goTarget(url) {

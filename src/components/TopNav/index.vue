@@ -32,7 +32,7 @@
   </el-menu>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { constantRoutes } from "@/router"
 import { isHttp } from '@/utils/validate'
 import useAppStore from '@/store/modules/app'

@@ -170,7 +170,7 @@
    </div>
 </template>
 
-<script setup name="JobLog">
+<script setup lang="ts" name="JobLog">
 import { getJob } from "@/api/monitor/job"
 import { listJobLog, delJobLog, cleanJobLog } from "@/api/monitor/jobLog"
 

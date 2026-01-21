@@ -57,7 +57,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ElMessageBox } from 'element-plus'
 import Breadcrumb from '@/components/Breadcrumb'
 import TopNav from '@/components/TopNav'
