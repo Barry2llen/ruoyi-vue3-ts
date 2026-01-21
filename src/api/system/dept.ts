@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import type { ApiResponse } from '@/types/api'
 
 // 查询部门列表
-export function listDept(query) {
-  return request({
+export function listDept(query: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/system/dept/list',
     method: 'get',
     params: query
@@ -10,24 +11,24 @@ export function listDept(query) {
 }
 
 // 查询部门列表（排除节点）
-export function listDeptExcludeChild(deptId) {
-  return request({
+export function listDeptExcludeChild(deptId: string | number) {
+  return request<ApiResponse>({
     url: '/system/dept/list/exclude/' + deptId,
     method: 'get'
   })
 }
 
 // 查询部门详细
-export function getDept(deptId) {
-  return request({
+export function getDept(deptId: string | number) {
+  return request<ApiResponse>({
     url: '/system/dept/' + deptId,
     method: 'get'
   })
 }
 
 // 新增部门
-export function addDept(data) {
-  return request({
+export function addDept(data: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/system/dept',
     method: 'post',
     data: data
@@ -35,8 +36,8 @@ export function addDept(data) {
 }
 
 // 修改部门
-export function updateDept(data) {
-  return request({
+export function updateDept(data: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/system/dept',
     method: 'put',
     data: data
@@ -44,8 +45,8 @@ export function updateDept(data) {
 }
 
 // 删除部门
-export function delDept(deptId) {
-  return request({
+export function delDept(deptId: string | number) {
+  return request<ApiResponse>({
     url: '/system/dept/' + deptId,
     method: 'delete'
   })

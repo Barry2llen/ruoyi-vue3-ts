@@ -1,18 +1,36 @@
 import defaultSettings from '@/settings'
 import { useDark, useToggle } from '@vueuse/core'
 import { useDynamicTitle } from '@/utils/dynamicTitle'
+import { defineStore } from 'pinia'
+
+interface SettingsState {
+  title: string
+  theme: string
+  sideTheme: string
+  showSettings: boolean
+  navType: number
+  tagsView: boolean
+  tagsIcon: boolean
+  fixedHeader: boolean
+  sidebarLogo: boolean
+  dynamicTitle: boolean
+  footerVisible: boolean
+  footerContent: string
+  isDark: boolean
+}
 
 const isDark = useDark()
 const toggleDark = useToggle(isDark)
 
 const { sideTheme, showSettings, navType, tagsView, tagsIcon, fixedHeader, sidebarLogo, dynamicTitle, footerVisible, footerContent } = defaultSettings
 
-const storageSetting = JSON.parse(localStorage.getItem('layout-setting')) || ''
+const storageSetting = (JSON.parse(localStorage.getItem('layout-setting') || 'null') ||
+  {}) as Partial<SettingsState>
 
 const useSettingsStore = defineStore(
   'settings',
   {
-    state: () => ({
+    state: (): SettingsState => ({
       title: '',
       theme: storageSetting.theme || '#409EFF',
       sideTheme: storageSetting.sideTheme || sideTheme,
@@ -29,14 +47,14 @@ const useSettingsStore = defineStore(
     }),
     actions: {
       // 修改布局设置
-      changeSetting(data) {
+      changeSetting(data: { key: keyof SettingsState; value: SettingsState[keyof SettingsState] }) {
         const { key, value } = data
         if (this.hasOwnProperty(key)) {
           this[key] = value
         }
       },
       // 设置网页标题
-      setTitle(title) {
+      setTitle(title: string) {
         this.title = title
         useDynamicTitle()
       },

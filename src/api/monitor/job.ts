@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import type { ApiResponse } from '@/types/api'
 
 // 查询定时任务调度列表
-export function listJob(query) {
-  return request({
+export function listJob(query: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/monitor/job/list',
     method: 'get',
     params: query
@@ -10,16 +11,16 @@ export function listJob(query) {
 }
 
 // 查询定时任务调度详细
-export function getJob(jobId) {
-  return request({
+export function getJob(jobId: string | number) {
+  return request<ApiResponse>({
     url: '/monitor/job/' + jobId,
     method: 'get'
   })
 }
 
 // 新增定时任务调度
-export function addJob(data) {
-  return request({
+export function addJob(data: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/monitor/job',
     method: 'post',
     data: data
@@ -27,8 +28,8 @@ export function addJob(data) {
 }
 
 // 修改定时任务调度
-export function updateJob(data) {
-  return request({
+export function updateJob(data: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/monitor/job',
     method: 'put',
     data: data
@@ -36,20 +37,20 @@ export function updateJob(data) {
 }
 
 // 删除定时任务调度
-export function delJob(jobId) {
-  return request({
+export function delJob(jobId: string | number) {
+  return request<ApiResponse>({
     url: '/monitor/job/' + jobId,
     method: 'delete'
   })
 }
 
 // 任务状态修改
-export function changeJobStatus(jobId, status) {
+export function changeJobStatus(jobId: string | number, status: string) {
   const data = {
     jobId,
     status
   }
-  return request({
+  return request<ApiResponse>({
     url: '/monitor/job/changeStatus',
     method: 'put',
     data: data
@@ -58,12 +59,12 @@ export function changeJobStatus(jobId, status) {
 
 
 // 定时任务立即执行一次
-export function runJob(jobId, jobGroup) {
+export function runJob(jobId: string | number, jobGroup: string) {
   const data = {
     jobId,
     jobGroup
   }
-  return request({
+  return request<ApiResponse>({
     url: '/monitor/job/run',
     method: 'put',
     data: data

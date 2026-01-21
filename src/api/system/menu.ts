@@ -1,8 +1,9 @@
 import request from '@/utils/request'
+import type { ApiResponse } from '@/types/api'
 
 // 查询菜单列表
-export function listMenu(query) {
-  return request({
+export function listMenu(query: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/system/menu/list',
     method: 'get',
     params: query
@@ -10,8 +11,8 @@ export function listMenu(query) {
 }
 
 // 查询菜单详细
-export function getMenu(menuId) {
-  return request({
+export function getMenu(menuId: string | number) {
+  return request<ApiResponse>({
     url: '/system/menu/' + menuId,
     method: 'get'
   })
@@ -19,23 +20,23 @@ export function getMenu(menuId) {
 
 // 查询菜单下拉树结构
 export function treeselect() {
-  return request({
+  return request<ApiResponse>({
     url: '/system/menu/treeselect',
     method: 'get'
   })
 }
 
 // 根据角色ID查询菜单下拉树结构
-export function roleMenuTreeselect(roleId) {
-  return request({
+export function roleMenuTreeselect(roleId: string | number) {
+  return request<ApiResponse>({
     url: '/system/menu/roleMenuTreeselect/' + roleId,
     method: 'get'
   })
 }
 
 // 新增菜单
-export function addMenu(data) {
-  return request({
+export function addMenu(data: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/system/menu',
     method: 'post',
     data: data
@@ -43,8 +44,8 @@ export function addMenu(data) {
 }
 
 // 修改菜单
-export function updateMenu(data) {
-  return request({
+export function updateMenu(data: Record<string, unknown>) {
+  return request<ApiResponse>({
     url: '/system/menu',
     method: 'put',
     data: data
@@ -52,8 +53,8 @@ export function updateMenu(data) {
 }
 
 // 删除菜单
-export function delMenu(menuId) {
-  return request({
+export function delMenu(menuId: string | number) {
+  return request<ApiResponse>({
     url: '/system/menu/' + menuId,
     method: 'delete'
   })

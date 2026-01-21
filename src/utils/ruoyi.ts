@@ -3,8 +3,15 @@
  * Copyright (c) 2019 ruoyi
  */
 
+import type { DictOption } from '@/types/dict'
+
+type PlainObject = Record<string, unknown>
+
 // 日期格式化
-export function parseTime(time, pattern) {
+export function parseTime(
+  time: string | number | Date | null | undefined,
+  pattern?: string
+): string | null {
   if (arguments.length === 0 || !time) {
     return null
   }
@@ -32,10 +39,12 @@ export function parseTime(time, pattern) {
     s: date.getSeconds(),
     a: date.getDay()
   }
-  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key) => {
-    let value = formatObj[key]
+  const time_str = format.replace(/{(y|m|d|h|i|s|a)+}/g, (result, key: string) => {
+    let value = formatObj[key as keyof typeof formatObj]
     // Note: getDay() returns 0 on Sunday
-    if (key === 'a') { return ['日', '一', '二', '三', '四', '五', '六'][value] }
+    if (key === 'a') {
+      return ['日', '一', '二', '三', '四', '五', '六'][value]
+    }
     if (result.length > 0 && value < 10) {
       value = '0' + value
     }
@@ -45,38 +54,50 @@ export function parseTime(time, pattern) {
 }
 
 // 表单重置
-export function resetForm(refName) {
-  if (this.$refs[refName]) {
-    this.$refs[refName].resetFields()
+export function resetForm(
+  this: { $refs: Record<string, { resetFields: () => void } | undefined> },
+  refName: string
+): void {
+  const ref = this.$refs[refName]
+  if (ref) {
+    ref.resetFields()
   }
 }
 
 // 添加日期范围
-export function addDateRange(params, dateRange, propName) {
-  let search = params
-  search.params = typeof (search.params) === 'object' && search.params !== null && !Array.isArray(search.params) ? search.params : {}
-  dateRange = Array.isArray(dateRange) ? dateRange : []
-  if (typeof (propName) === 'undefined') {
-    search.params['beginTime'] = dateRange[0]
-    search.params['endTime'] = dateRange[1]
+export function addDateRange<T extends PlainObject>(
+  params: T & { params?: PlainObject },
+  dateRange: Array<string | number | Date>,
+  propName?: string
+): T & { params: PlainObject } {
+  const search = params
+  search.params =
+    typeof search.params === 'object' && search.params !== null && !Array.isArray(search.params)
+      ? search.params
+      : {}
+  const range = Array.isArray(dateRange) ? dateRange : []
+  if (typeof propName === 'undefined') {
+    search.params['beginTime'] = range[0]
+    search.params['endTime'] = range[1]
   } else {
-    search.params['begin' + propName] = dateRange[0]
-    search.params['end' + propName] = dateRange[1]
+    search.params[`begin${propName}`] = range[0]
+    search.params[`end${propName}`] = range[1]
   }
-  return search
+  return search as T & { params: PlainObject }
 }
 
 // 回显数据字典
-export function selectDictLabel(datas, value) {
+export function selectDictLabel(datas: DictOption[], value: string | number): string {
   if (value === undefined) {
-    return ""
+    return ''
   }
-  var actions = []
-  Object.keys(datas).some((key) => {
-    if (datas[key].value == ('' + value)) {
-      actions.push(datas[key].label)
+  const actions: Array<string | number> = []
+  datas.some((item) => {
+    if (item.value == `${value}`) {
+      actions.push(item.label)
       return true
     }
+    return false
   })
   if (actions.length === 0) {
     actions.push(value)
@@ -85,67 +106,81 @@ export function selectDictLabel(datas, value) {
 }
 
 // 回显数据字典（字符串、数组）
-export function selectDictLabels(datas, value, separator) {
-  if (value === undefined || value.length ===0) {
-    return ""
+export function selectDictLabels(
+  datas: DictOption[],
+  value: string | number | Array<string | number>,
+  separator = ','
+): string {
+  if (value === undefined || value.length === 0) {
+    return ''
   }
+  let currentValue: string
   if (Array.isArray(value)) {
-    value = value.join(",")
+    currentValue = value.join(',')
+  } else {
+    currentValue = `${value}`
   }
-  var actions = []
-  var currentSeparator = undefined === separator ? "," : separator
-  var temp = value.split(currentSeparator)
-  Object.keys(value.split(currentSeparator)).some((val) => {
-    var match = false
-    Object.keys(datas).some((key) => {
-      if (datas[key].value == ('' + temp[val])) {
-        actions.push(datas[key].label + currentSeparator)
+  const actions: string[] = []
+  const temp = currentValue.split(separator)
+  Object.keys(temp).some((val) => {
+    let match = false
+    datas.some((item) => {
+      if (item.value == `${temp[Number(val)]}`) {
+        actions.push(item.label + separator)
         match = true
       }
     })
     if (!match) {
-      actions.push(temp[val] + currentSeparator)
+      actions.push(temp[Number(val)] + separator)
     }
   })
   return actions.join('').substring(0, actions.join('').length - 1)
 }
 
 // 字符串格式化(%s )
-export function sprintf(str) {
-  var args = arguments, flag = true, i = 1
-  str = str.replace(/%s/g, function () {
-    var arg = args[i++]
+export function sprintf(str: string, ...args: Array<string | number>): string {
+  let flag = true
+  let i = 0
+  const result = str.replace(/%s/g, () => {
+    const arg = args[i++]
     if (typeof arg === 'undefined') {
       flag = false
       return ''
     }
     return arg
   })
-  return flag ? str : ''
+  return flag ? result : ''
 }
 
 // 转换字符串，undefined,null等转化为""
-export function parseStrEmpty(str) {
-  if (!str || str == "undefined" || str == "null") {
-    return ""
+export function parseStrEmpty(str?: string | number | null): string {
+  if (!str || str == 'undefined' || str == 'null') {
+    return ''
   }
-  return str
+  return String(str)
 }
 
 // 数据合并
-export function mergeRecursive(source, target) {
-  for (var p in target) {
+export function mergeRecursive<T extends PlainObject, K extends PlainObject>(
+  source: T,
+  target: K
+): T & K {
+  for (const p in target) {
     try {
-      if (target[p].constructor == Object) {
-        source[p] = mergeRecursive(source[p], target[p])
+      const targetValue = target[p]
+      if (targetValue && (targetValue as PlainObject).constructor == Object) {
+        source[p as keyof T] = mergeRecursive(
+          source[p as keyof T] as PlainObject,
+          targetValue as PlainObject
+        ) as T[keyof T]
       } else {
-        source[p] = target[p]
+        source[p as keyof T] = targetValue as T[keyof T]
       }
     } catch (e) {
-      source[p] = target[p]
+      source[p as keyof T] = target[p] as T[keyof T]
     }
   }
-  return source
+  return source as T & K
 }
 
 /**
@@ -155,30 +190,36 @@ export function mergeRecursive(source, target) {
  * @param {*} parentId 父节点字段 默认 'parentId'
  * @param {*} children 孩子节点字段 默认 'children'
  */
-export function handleTree(data, id, parentId, children) {
-  let config = {
+export function handleTree<T extends PlainObject>(
+  data: T[],
+  id?: string,
+  parentId?: string,
+  children?: string
+): T[] {
+  const config = {
     id: id || 'id',
     parentId: parentId || 'parentId',
     childrenList: children || 'children'
   }
 
-  var childrenListMap = {}
-  var tree = []
-  for (let d of data) {
-    let id = d[config.id]
-    childrenListMap[id] = d
-    if (!d[config.childrenList]) {
-      d[config.childrenList] = []
+  const childrenListMap: Record<string, T> = {}
+  const tree: T[] = []
+  for (const d of data) {
+    const currentId = d[config.id as keyof T] as unknown as string
+    childrenListMap[currentId] = d
+    if (!d[config.childrenList as keyof T]) {
+      d[config.childrenList as keyof T] = [] as unknown as T[keyof T]
     }
   }
 
-  for (let d of data) {
-    let parentId = d[config.parentId]
-    let parentObj = childrenListMap[parentId]
+  for (const d of data) {
+    const currentParentId = d[config.parentId as keyof T] as unknown as string
+    const parentObj = childrenListMap[currentParentId]
     if (!parentObj) {
       tree.push(d)
     } else {
-      parentObj[config.childrenList].push(d)
+      const childrenList = parentObj[config.childrenList as keyof T] as unknown as T[]
+      childrenList.push(d)
     }
   }
   return tree
@@ -188,22 +229,22 @@ export function handleTree(data, id, parentId, children) {
 * 参数处理
 * @param {*} params  参数
 */
-export function tansParams(params) {
+export function tansParams(params: PlainObject): string {
   let result = ''
   for (const propName of Object.keys(params)) {
     const value = params[propName]
-    var part = encodeURIComponent(propName) + "="
-    if (value !== null && value !== "" && typeof (value) !== "undefined") {
+    const part = `${encodeURIComponent(propName)}=`
+    if (value !== null && value !== '' && typeof value !== 'undefined') {
       if (typeof value === 'object') {
         for (const key of Object.keys(value)) {
-          if (value[key] !== null && value[key] !== "" && typeof (value[key]) !== 'undefined') {
-            let params = propName + '[' + key + ']'
-            var subPart = encodeURIComponent(params) + "="
-            result += subPart + encodeURIComponent(value[key]) + "&"
+          if (value[key] !== null && value[key] !== '' && typeof value[key] !== 'undefined') {
+            const currentParams = `${propName}[${key}]`
+            const subPart = `${encodeURIComponent(currentParams)}=`
+            result += subPart + encodeURIComponent(value[key] as string) + '&'
           }
         }
       } else {
-        result += part + encodeURIComponent(value) + "&"
+        result += part + encodeURIComponent(value as string) + '&'
       }
     }
   }
@@ -211,8 +252,8 @@ export function tansParams(params) {
 }
 
 // 返回项目路径
-export function getNormalPath(p) {
-  if (p.length === 0 || !p || p == 'undefined') {
+export function getNormalPath(p: string): string {
+  if (p.length === 0 || p == 'undefined') {
     return p
   }
   let res = p.replace('//', '/')
@@ -223,6 +264,6 @@ export function getNormalPath(p) {
 }
 
 // 验证是否为blob格式
-export function blobValidate(data) {
+export function blobValidate(data: Blob): boolean {
   return data.type !== 'application/json'
 }
