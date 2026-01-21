@@ -1,13 +1,20 @@
+import { defineStore } from 'pinia'
+import type { DictItem, DictOption } from '@/types/dict'
+
+interface DictState {
+  dict: DictItem[]
+}
+
 const useDictStore = defineStore(
   'dict',
   {
-    state: () => ({
-      dict: new Array()
+    state: (): DictState => ({
+      dict: []
     }),
     actions: {
       // 获取字典
-      getDict(_key) {
-        if (_key == null && _key == "") {
+      getDict(_key: string) {
+        if (_key == null && _key == '') {
           return null
         }
         try {
@@ -19,10 +26,11 @@ const useDictStore = defineStore(
         } catch (e) {
           return null
         }
+        return null
       },
       // 设置字典
-      setDict(_key, value) {
-        if (_key !== null && _key !== "") {
+      setDict(_key: string, value: DictOption[]) {
+        if (_key !== null && _key !== '') {
           this.dict.push({
             key: _key,
             value: value
@@ -30,8 +38,8 @@ const useDictStore = defineStore(
         }
       },
       // 删除字典
-      removeDict(_key) {
-        var bln = false
+      removeDict(_key: string) {
+        let bln = false
         try {
           for (let i = 0; i < this.dict.length; i++) {
             if (this.dict[i].key == _key) {
@@ -46,7 +54,7 @@ const useDictStore = defineStore(
       },
       // 清空字典
       cleanDict() {
-        this.dict = new Array()
+        this.dict = []
       },
       // 初始字典
       initDict() {

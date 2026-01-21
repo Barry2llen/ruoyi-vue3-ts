@@ -13,7 +13,7 @@ NProgress.configure({ showSpinner: false })
 
 const whiteList = ['/login', '/register']
 
-const isWhiteList = (path) => {
+const isWhiteList = (path: string): boolean => {
   return whiteList.some(pattern => isPathMatch(pattern, path))
 }
 

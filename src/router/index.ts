@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router'
+import type { AppRouteRecordRaw } from '@/types/router'
 /* Layout */
 import Layout from '@/layout'
 
@@ -25,7 +26,7 @@ import Layout from '@/layout'
  */
 
 // 公共路由
-export const constantRoutes = [
+export const constantRoutes: AppRouteRecordRaw[] = [
   {
     path: '/redirect',
     component: Layout,
@@ -87,7 +88,7 @@ export const constantRoutes = [
 ]
 
 // 动态路由，基于用户权限动态去加载
-export const dynamicRoutes = [
+export const dynamicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/system/user-auth',
     component: Layout,

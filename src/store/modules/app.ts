@@ -1,9 +1,22 @@
 import Cookies from 'js-cookie'
+import { defineStore } from 'pinia'
+
+interface SidebarState {
+  opened: boolean
+  withoutAnimation: boolean
+  hide: boolean
+}
+
+interface AppState {
+  sidebar: SidebarState
+  device: 'desktop' | 'mobile'
+  size: string
+}
 
 const useAppStore = defineStore(
   'app',
   {
-    state: () => ({
+    state: (): AppState => ({
       sidebar: {
         opened: Cookies.get('sidebarStatus') ? !!+Cookies.get('sidebarStatus') : true,
         withoutAnimation: false,
@@ -13,7 +26,7 @@ const useAppStore = defineStore(
       size: Cookies.get('size') || 'default'
     }),
     actions: {
-      toggleSideBar(withoutAnimation) {
+      toggleSideBar(withoutAnimation: boolean) {
         if (this.sidebar.hide) {
           return false
         }
@@ -25,19 +38,19 @@ const useAppStore = defineStore(
           Cookies.set('sidebarStatus', 0)
         }
       },
-      closeSideBar({ withoutAnimation }) {
+      closeSideBar({ withoutAnimation }: { withoutAnimation: boolean }) {
         Cookies.set('sidebarStatus', 0)
         this.sidebar.opened = false
         this.sidebar.withoutAnimation = withoutAnimation
       },
-      toggleDevice(device) {
+      toggleDevice(device: 'desktop' | 'mobile') {
         this.device = device
       },
-      setSize(size) {
+      setSize(size: string) {
         this.size = size
         Cookies.set('size', size)
       },
-      toggleSideBarHide(status) {
+      toggleSideBarHide(status: boolean) {
         this.sidebar.hide = status
       }
     }

@@ -42,3 +42,4 @@
 ## Configuration Tips
 - Environment files: `.env.development`, `.env.staging`, `.env.production`. Update the correct file for each target.
 - Keep secrets out of the repo; use env variables for API endpoints and keys.
+- 新增配置：`eslint.config.cjs`, `.prettierrc.cjs`, `.prettierignore` 用于 ESLint/Prettier 规则与忽略项。
